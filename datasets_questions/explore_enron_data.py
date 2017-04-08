@@ -54,7 +54,7 @@ print 'fastows money', fastows_money
 lays_money = enron_data["LAY KENNETH L"]["total_payments"]
 print 'lays money', lays_money
 
-#print enron_data.values()
+print enron_data.values()
 
 # count number of persons of quantified salary
 count_q_salary = 0
@@ -71,3 +71,14 @@ for key in enron_data:
         count_email += 1
 
 print 'number of persons with email:', count_email
+
+# count number of persons of quantified salary
+count_q_salary_nan = 0
+for key in enron_data:
+    if enron_data[key]['salary'] == 'NaN':
+        count_q_salary_nan += 1
+
+print 'number of persons with none quantified salary :', count_q_salary_nan
+
+percentage = ((count_q_salary+count_q_salary_nan)/100)*count_q_salary_nan
+print percentage, '% don t have a quantified salary'
