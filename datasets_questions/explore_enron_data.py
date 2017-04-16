@@ -54,7 +54,7 @@ print 'fastows money', fastows_money
 lays_money = enron_data["LAY KENNETH L"]["total_payments"]
 print 'lays money', lays_money
 
-print enron_data.values()
+#print enron_data.values()
 
 # count number of persons of quantified salary
 count_q_salary = 0
@@ -80,5 +80,27 @@ for key in enron_data:
 
 print 'number of persons with none quantified salary :', count_q_salary_nan
 
-percentage = ((count_q_salary+count_q_salary_nan)/100)*count_q_salary_nan
+percentage = ((count_q_salary+count_q_salary_nan)/100.)*count_q_salary_nan
 print percentage, '% don t have a quantified salary'
+
+length = len(enron_data)
+print 'Length of Dataset', len(enron_data)
+
+#count total payments nan
+count_total_payments_nan = 0
+for key in enron_data:
+    if enron_data[key]['total_payments'] == 'NaN' and enron_data[key]['poi'] == True:
+        count_total_payments_nan += 1
+
+print 'number of POIs with NaN Total Payments :', count_total_payments_nan
+
+percentage_total_payments = ((length / 100.) * count_total_payments_nan)
+print percentage_total_payments, '% of POIs don t have NaN for total payments'
+
+#count pois
+count_pois = 0
+for key in enron_data:
+    if enron_data[key]['poi'] == True:
+        count_pois += 1
+
+print 'number of POIs:', count_pois
