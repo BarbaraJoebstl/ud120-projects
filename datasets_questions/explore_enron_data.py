@@ -104,3 +104,50 @@ for key in enron_data:
         count_pois += 1
 
 print 'number of POIs:', count_pois
+
+#remove the spreadsheet error...
+enron_data.pop("TOTAL", 0)
+
+#max and min of exercised stock options
+
+max_exercised_stock_options = float("-inf")
+min_exercised_stock_options = float("inf")
+
+for k, v in enron_data.iteritems():
+    if v["exercised_stock_options"] != "NaN":
+        if v["exercised_stock_options"] > max_exercised_stock_options:
+            max_exercised_stock_options = v["exercised_stock_options"]
+        if v["exercised_stock_options"] < min_exercised_stock_options:
+            min_exercised_stock_options = v["exercised_stock_options"]
+
+print 'MAX exercised stock options:', max_exercised_stock_options
+print 'MIN exercised stock options:', min_exercised_stock_options
+
+max_salary = float("-inf")
+min_salary = float("inf")
+
+for k, v in enron_data.iteritems():
+    if v["salary"] != "NaN":
+        if v["salary"] > max_salary:
+            max_salary = v["salary"]
+        if v["salary"] < min_salary:
+            min_salary = v["salary"]
+
+print 'MAX salary:', max_salary
+print 'MIN salary:', min_salary
+
+#MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
+import numpy
+
+scaler = MinMaxScaler()
+salary_scaled_array = numpy.array([[min_salary], [200000.], [max_salary]])
+
+rescaled_salary = scaler.fit_transform(salary_scaled_array)
+
+print 'scaled salary for 200 000', rescaled_salary
+
+stock_options_scaled_array = numpy.array([[min_exercised_stock_options], [1000000.], [max_exercised_stock_options]])
+rescaled_stock_options = scaler.fit_transform(stock_options_scaled_array)
+
+print 'scaled stock options for 1m', rescaled_stock_options
