@@ -44,6 +44,7 @@ def preprocess(words_file = "../tools/word_data.pkl", authors_file="../tools/ema
 
 
     ### text vectorization--go from strings to lists of numbers
+    ### max_df: if word appears in 50% of the documents it will be ignored
     vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5,
                                  stop_words='english')
     features_train_transformed = vectorizer.fit_transform(features_train)
@@ -53,6 +54,7 @@ def preprocess(words_file = "../tools/word_data.pkl", authors_file="../tools/ema
 
     ### feature selection, because text is super high dimensional and 
     ### can be really computationally chewy as a result
+    ### take only the best 10% with the most information
     selector = SelectPercentile(f_classif, percentile=10)
     selector.fit(features_train_transformed, labels_train)
     features_train_transformed = selector.transform(features_train_transformed).toarray()
@@ -63,3 +65,5 @@ def preprocess(words_file = "../tools/word_data.pkl", authors_file="../tools/ema
     print "no. of Sara training emails:", len(labels_train)-sum(labels_train)
     
     return features_train_transformed, features_test_transformed, labels_train, labels_test
+
+#
