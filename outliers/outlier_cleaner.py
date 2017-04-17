@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+import numpy as np
 
 def outlierCleaner(predictions, ages, net_worths):
     """
@@ -14,7 +14,16 @@ def outlierCleaner(predictions, ages, net_worths):
     cleaned_data = []
 
     ### your code goes here
-
-    
-    return cleaned_data
+    #calculating the SSE(sum of squared errors)
+    error = (net_worths - predictions)**2
+    #stack array horizontally
+    hstack = np.hstack((ages, net_worths, error))
+    #print hstack
+    list = hstack.tolist()
+    #sort the list
+    list = sorted(list,key=lambda x: x[2])
+    #remove 10% of the outliers
+    n=len(list)/10
+    cleaned_data=list[0:-n]
+    return cleaned_data    
 
